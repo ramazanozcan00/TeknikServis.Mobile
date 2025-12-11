@@ -6,7 +6,7 @@ namespace TeknikServis.Mobile;
 public partial class LoginPage : ContentPage
 {
     // Web API Adresi (Port: 5158)
-    private const string ApiUrl = "http://10.0.2.2:5158/api/Auth/Test";
+    private const string ApiUrl = "http://10.0.2.2:5158/api/Auth/Login";
 
     public LoginPage()
     {

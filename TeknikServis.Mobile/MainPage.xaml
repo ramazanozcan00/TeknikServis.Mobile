@@ -2,71 +2,146 @@
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             x:Class="TeknikServis.Mobile.MainPage"
-            SelectedTabColor="#007bff"
-            UnselectedTabColor="Gray"
+            SelectedTabColor="#2563eb"
+            UnselectedTabColor="#94a3b8"
             BarBackgroundColor="White">
 
-    <ContentPage Title="Kayıtlar" >
-        <Grid RowDefinitions="Auto,*">
-            <Grid ColumnDefinitions="*, Auto" Padding="15">
-                <Label Text="Şube Kayıtları" FontSize="20" FontAttributes="Bold" TextColor="#333" VerticalOptions="Center"/>
-                <Button Grid.Column="1" Text="Yenile" Clicked="SorgulaBtn_Clicked" HeightRequest="40" BackgroundColor="#007bff" TextColor="White"/>
-            </Grid>
-
-            <CollectionView Grid.Row="1" ItemsSource="{Binding MyTickets}" BackgroundColor="#f4f6f9">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Margin="10,5" Padding="15" CornerRadius="10" BackgroundColor="White" HasShadow="True" BorderColor="Transparent">
-                            <VerticalStackLayout Spacing="5">
-                                <Grid ColumnDefinitions="*, Auto">
-                                    <Label Text="{Binding FisNo}" FontAttributes="Bold" TextColor="#007bff" FontSize="16"/>
-                                    <Label Grid.Column="1" Text="{Binding Durum}" TextColor="Orange" FontAttributes="Bold"/>
-                                </Grid>
-                                <Label Text="{Binding Musteri}" FontSize="15" TextColor="#333"/>
-                                <Label Text="{Binding Cihaz}" FontSize="13" TextColor="Gray"/>
-                                <Label Text="{Binding Tarih}" HorizontalOptions="End" FontSize="11" TextColor="#999"/>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                <CollectionView.EmptyView>
-                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
-                        <Label Text="Kayıt bulunamadı." TextColor="Gray"/>
+    <ContentPage Title="Arıza Kaydı" BackgroundColor="#f8fafc">
+        <ScrollView>
+            <VerticalStackLayout Spacing="0">
+                <Grid BackgroundColor="#2563eb" HeightRequest="100" Padding="20">
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <Label Text="Hızlı Arıza Kaydı" FontSize="24" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="Servis fişi oluşturma formu" FontSize="14" TextColor="#e0e7ff"/>
                     </VerticalStackLayout>
-                </CollectionView.EmptyView>
-            </CollectionView>
-        </Grid>
-    </ContentPage>
+                </Grid>
 
-    <ContentPage Title="Yeni Kayıt" >
-        <ScrollView BackgroundColor="#f4f6f9">
-            <VerticalStackLayout Padding="20" Spacing="20">
+                <VerticalStackLayout Padding="20" Spacing="20" Margin="0,-30,0,0">
+                    <Frame CornerRadius="15" HasShadow="True" BackgroundColor="White" BorderColor="Transparent" Padding="20">
+                        <VerticalStackLayout Spacing="15">
+                            <Label Text="Müşteri Bilgileri" TextColor="#2563eb" FontAttributes="Bold" FontSize="16"/>
+                            <BoxView HeightRequest="1" Color="#f1f5f9"/>
+                            <Entry x:Name="TxtHizliAd" Placeholder="Ad Soyad" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                            <Entry x:Name="TxtHizliTel" Placeholder="Telefon" Keyboard="Telephone" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                        </VerticalStackLayout>
+                    </Frame>
 
-                <Label Text="Hızlı Servis Kaydı" FontSize="24" FontAttributes="Bold" TextColor="#333" HorizontalOptions="Center"/>
+                    <Frame CornerRadius="15" HasShadow="True" BackgroundColor="White" BorderColor="Transparent" Padding="20">
+                        <VerticalStackLayout Spacing="15">
+                            <Label Text="Cihaz Bilgileri" TextColor="#2563eb" FontAttributes="Bold" FontSize="16"/>
+                            <BoxView HeightRequest="1" Color="#f1f5f9"/>
+                            <Label Text="Cihaz Türü" FontSize="12" TextColor="Gray"/>
+                            <Picker x:Name="PickerType" Title="Tür Seçiniz" BackgroundColor="#f8fafc" TextColor="#334155" ItemDisplayBinding="{Binding Name}"/>
+                            <Label Text="Cihaz Markası" FontSize="12" TextColor="Gray"/>
+                            <Picker x:Name="PickerBrand" Title="Marka Seçiniz" BackgroundColor="#f8fafc" TextColor="#334155" ItemDisplayBinding="{Binding Name}"/>
+                            <Entry x:Name="TxtHizliModel" Placeholder="Model" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                            <Label Text="Arıza Açıklaması" FontSize="12" TextColor="Gray"/>
+                            <Editor x:Name="TxtHizliSorun" Placeholder="Sorun nedir?" HeightRequest="80" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                        </VerticalStackLayout>
+                    </Frame>
 
-                <Frame CornerRadius="15" HasShadow="True" BackgroundColor="White" BorderColor="Transparent" Padding="20">
-                    <VerticalStackLayout Spacing="15">
-
-                        <Label Text="Adınız Soyadınız" TextColor="#555" FontSize="14"/>
-                        <Entry x:Name="TxtAd" Placeholder="Ad Soyad" BackgroundColor="#f1f3f5" TextColor="Black"/>
-
-                        <Label Text="Telefon Numaranız" TextColor="#555" FontSize="14"/>
-                        <Entry x:Name="TxtTel" Placeholder="5XX..." Keyboard="Telephone" BackgroundColor="#f1f3f5" TextColor="Black"/>
-
-                        <Label Text="Cihaz Marka/Model" TextColor="#555" FontSize="14"/>
-                        <Entry x:Name="TxtCihaz" Placeholder="Örn: iPhone 11" BackgroundColor="#f1f3f5" TextColor="Black"/>
-
-                        <Label Text="Arıza Açıklaması" TextColor="#555" FontSize="14"/>
-                        <Editor x:Name="TxtSorun" Placeholder="Sorun nedir?" HeightRequest="100" BackgroundColor="#f1f3f5" TextColor="Black"/>
-
-                        <Button x:Name="KaydetBtn" Text="Servis Kaydı Oluştur" Clicked="KaydetBtn_Clicked" BackgroundColor="#28a745" TextColor="White" CornerRadius="10" HeightRequest="50" FontAttributes="Bold" Margin="0,10,0,0"/>
-
-                        <ActivityIndicator x:Name="YukleniyorKayit" IsRunning="False" Color="#28a745"/>
-                    </VerticalStackLayout>
-                </Frame>
-
+                    <Button x:Name="BtnServisKaydet" Text="KAYDI OLUŞTUR" Clicked="BtnServisKaydet_Clicked" BackgroundColor="#2563eb" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="55"/>
+                    <ActivityIndicator x:Name="LoaderServis" IsRunning="False" Color="#2563eb"/>
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
     </ContentPage>
 
+    <ContentPage Title="Müşteri Ekle" BackgroundColor="#f8fafc">
+        <ScrollView>
+            <VerticalStackLayout Spacing="0">
+                <Grid BackgroundColor="#2563eb" HeightRequest="100" Padding="20">
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <Label Text="Yeni Müşteri" FontSize="24" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="Müşteri kartı oluşturma formu" FontSize="14" TextColor="#e0e7ff"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <VerticalStackLayout Padding="20" Spacing="20" Margin="0,-30,0,0">
+                    <Frame CornerRadius="15" HasShadow="True" BackgroundColor="White" BorderColor="Transparent" Padding="20">
+                        <VerticalStackLayout Spacing="15">
+                            <Label Text="Genel Bilgiler" TextColor="#2563eb" FontAttributes="Bold" FontSize="16"/>
+                            <BoxView HeightRequest="1" Color="#f1f5f9"/>
+
+                            <Label Text="Müşteri Tipi" FontSize="12" TextColor="Gray"/>
+                            <Picker x:Name="PickerCustomerType" Title="Tip Seçiniz" BackgroundColor="#f8fafc" TextColor="#334155"/>
+
+                            <Label Text="Firma (Varsa)" FontSize="12" TextColor="Gray"/>
+                            <Picker x:Name="PickerCompany" 
+                                                            Title="Firma Seçiniz" 
+                                         BackgroundColor="#f8fafc" 
+                                        TextColor="#334155"/>
+
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                <Entry x:Name="TxtAd" Grid.Column="0" Placeholder="Ad" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                                <Entry x:Name="TxtSoyad" Grid.Column="1" Placeholder="Soyad" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                            </Grid>
+                            <Entry x:Name="TxtTC" Placeholder="TC Kimlik No" Keyboard="Numeric" MaxLength="11" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame CornerRadius="15" HasShadow="True" BackgroundColor="White" BorderColor="Transparent" Padding="20">
+                        <VerticalStackLayout Spacing="15">
+                            <Label Text="İletişim Bilgileri" TextColor="#2563eb" FontAttributes="Bold" FontSize="16"/>
+                            <BoxView HeightRequest="1" Color="#f1f5f9"/>
+                            <Entry x:Name="TxtTel" Placeholder="Cep Telefonu" Keyboard="Telephone" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                            <Entry x:Name="TxtTel2" Placeholder="2. Telefon" Keyboard="Telephone" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                            <Entry x:Name="TxtEmail" Placeholder="E-Posta" Keyboard="Email" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="İl" FontSize="12" TextColor="Gray"/>
+                                    <Picker x:Name="PickerCity" Title="İl Seç" BackgroundColor="#f8fafc" TextColor="#334155" SelectedIndexChanged="PickerCity_SelectedIndexChanged"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="İlçe" FontSize="12" TextColor="Gray"/>
+                                    <Picker x:Name="PickerDistrict" Title="İlçe Seç" BackgroundColor="#f8fafc" TextColor="#334155" IsEnabled="False"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                            <Editor x:Name="TxtAdres" Placeholder="Açık Adres" HeightRequest="80" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame CornerRadius="15" HasShadow="True" BackgroundColor="White" BorderColor="Transparent" Padding="20">
+                        <VerticalStackLayout Spacing="15">
+                            <Label Text="Fatura Bilgileri" TextColor="#2563eb" FontAttributes="Bold" FontSize="16"/>
+                            <BoxView HeightRequest="1" Color="#f1f5f9"/>
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                <Entry x:Name="TxtVergiDairesi" Grid.Column="0" Placeholder="Vergi Dairesi" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                                <Entry x:Name="TxtVergiNo" Grid.Column="1" Placeholder="Vergi No" Keyboard="Numeric" BackgroundColor="#f8fafc" TextColor="#334155"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Button x:Name="BtnMusteriKaydet" Text="MÜŞTERİYİ KAYDET" Clicked="BtnMusteriKaydet_Clicked" BackgroundColor="#2563eb" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="55"/>
+                    <ActivityIndicator x:Name="LoaderMusteri" IsRunning="False" Color="#2563eb"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage>
+
+    <ContentPage Title="Kayıtlar" BackgroundColor="#f8fafc">
+        <Grid RowDefinitions="Auto,*">
+            <Grid ColumnDefinitions="*, Auto" Padding="15" BackgroundColor="White">
+                <Label Text="Son İşlemler" FontSize="20" FontAttributes="Bold" TextColor="#334155" VerticalOptions="Center"/>
+                <Button Grid.Column="1" Text="Yenile" Clicked="SorgulaBtn_Clicked" HeightRequest="36" BackgroundColor="#e2e8f0" TextColor="#334155" CornerRadius="8"/>
+            </Grid>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding MyTickets}" Margin="0,10,0,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="15,6" Padding="15" CornerRadius="12" BackgroundColor="White" HasShadow="True" BorderColor="Transparent">
+                            <VerticalStackLayout Spacing="6">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <Label Text="{Binding FisNo}" FontAttributes="Bold" TextColor="#2563eb" FontSize="15"/>
+                                    <Label Grid.Column="1" Text="{Binding Durum}" TextColor="#f59e0b" FontAttributes="Bold" FontSize="12"/>
+                                </Grid>
+                                <Label Text="{Binding Musteri}" FontSize="14" TextColor="#334155" FontAttributes="Bold"/>
+                                <Label Text="{Binding Cihaz}" FontSize="13" TextColor="#64748b"/>
+                                <Label Text="{Binding Tarih}" HorizontalOptions="End" FontSize="11" TextColor="#94a3b8"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ContentPage>
 </TabbedPage>
