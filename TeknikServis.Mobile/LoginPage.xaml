@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TeknikServis.Mobile.LoginPage"
+             BackgroundColor="White">
+
+    <VerticalStackLayout Spacing="20" Padding="30" VerticalOptions="Center">
+
+        <Label Text="PERSONEL GİRİŞİ" 
+               FontSize="28" FontAttributes="Bold" 
+               TextColor="#007bff" HorizontalOptions="Center"/>
+
+        <Entry x:Name="TxtUser" Placeholder="Kullanıcı Adı" TextColor="Black" BackgroundColor="#f0f0f0"/>
+
+        <Entry x:Name="TxtPass" Placeholder="Şifre" IsPassword="True" TextColor="Black" BackgroundColor="#f0f0f0"/>
+
+        <Button x:Name="BtnLogin" Text="GİRİŞ YAP" 
+                Clicked="BtnLogin_Clicked"
+                BackgroundColor="#007bff" TextColor="White" HeightRequest="50" CornerRadius="10"/>
+
+        <ActivityIndicator x:Name="Loading" IsRunning="False" Color="#007bff"/>
+
+    </VerticalStackLayout>
+</ContentPage>
