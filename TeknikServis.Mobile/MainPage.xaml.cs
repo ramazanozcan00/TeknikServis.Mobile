@@ -7,7 +7,7 @@ namespace TeknikServis.Mobile;
 public partial class MainPage : TabbedPage
 {
     // PORT NUMARASINI KONTROL EDİN (Siyah ekrandakiyle aynı olmalı)
-    private const string BaseUrl = "http://10.0.2.2:5158/api";
+    private const string BaseUrl = "http://10.0.2.2:57584/api";
 
     // Ekrana Bağlı Listeler (Selectboxlar ve Liste için)
     public ObservableCollection<TicketListItem> MyTickets { get; set; } = new ObservableCollection<TicketListItem>();
@@ -75,6 +75,7 @@ public partial class MainPage : TabbedPage
     }
 
     // Müşteri Kaydı İçin Firmaları Çeker (CompanySetting API'den)
+    // MainPage.xaml.cs içindeki LoadCompanies metodu
     private async void LoadCompanies()
     {
         try
@@ -82,14 +83,14 @@ public partial class MainPage : TabbedPage
             var handler = new HttpClientHandler { ServerCertificateCustomValidationCallback = (m, c, ch, e) => true };
             using (HttpClient client = new HttpClient(handler))
             {
-                // Yeni oluşturduğumuz API'ye istek atıyoruz
-                var response = await client.GetAsync($"{BaseUrl}/CompanySetting/GetAll");
+                // Timeout eklemek, bağlantı sorununu daha hızlı anlamanızı sağlar
+                client.Timeout = TimeSpan.FromSeconds(10);
+
+                var response = await client.GetAsync($"{BaseUrl}/CompanySettingApi/GetAll");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-
-                    // API artık direkt liste ["A", "B"] döndüğü için List<string> olarak alıyoruz
                     var companies = JsonSerializer.Deserialize<List<string>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                     if (companies != null)
@@ -101,11 +102,17 @@ public partial class MainPage : TabbedPage
                         }
                     }
                 }
+                else
+                {
+                    // API hatası dönerse görmek için:
+                    await DisplayAlert("Hata", $"Firma listesi alınamadı. Kod: {response.StatusCode}", "Tamam");
+                }
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Firma Listesi Hatası: " + ex.Message);
+            // Bağlantı hatasını ekranda görmek için:
+            await DisplayAlert("Firma Yükleme Hatası", ex.Message, "Tamam");
         }
     }
 

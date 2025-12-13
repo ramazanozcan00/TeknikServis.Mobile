@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:vm="clr-namespace:TeknikServis.Mobile.ViewModels"
             x:Class="TeknikServis.Mobile.MainPage"
             SelectedTabColor="#2563eb"
             UnselectedTabColor="#94a3b8"
@@ -48,6 +49,10 @@
     </ContentPage>
 
     <ContentPage Title="Müşteri Ekle" BackgroundColor="#f8fafc">
+        <ContentPage.BindingContext>
+            <vm:CustomerRegistrationViewModel />
+        </ContentPage.BindingContext>
+
         <ScrollView>
             <VerticalStackLayout Spacing="0">
                 <Grid BackgroundColor="#2563eb" HeightRequest="100" Padding="20">
@@ -68,9 +73,11 @@
 
                             <Label Text="Firma (Varsa)" FontSize="12" TextColor="Gray"/>
                             <Picker x:Name="PickerCompany" 
-                                                            Title="Firma Seçiniz" 
-                                         BackgroundColor="#f8fafc" 
-                                        TextColor="#334155"/>
+                                    Title="Firma Seçiniz" 
+                                    BackgroundColor="#f8fafc" 
+                                    TextColor="#334155"
+                                    ItemsSource="{Binding CompanyList}"
+                                    SelectedItem="{Binding SelectedCompany}"/>
 
                             <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
                                 <Entry x:Name="TxtAd" Grid.Column="0" Placeholder="Ad" BackgroundColor="#f8fafc" TextColor="#334155"/>
